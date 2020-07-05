@@ -19,12 +19,32 @@ class ArtikelController extends Controller
     $data=$request->all();
     unset($data["_token"]);
     $data['slug']=str_replace(" ","-",$data['judul']);
-    dd($data);
-    
+    //dd($data);
+
     $artikel=ArtikelModel::save($data);
     if ($artikel){
          return redirect('/artikel');
     }
    
+}
+public function destroy($id){
+    $delete=ArtikelModel::destroy($id);
+    return redirect('/artikel');
+}
+public function edit($id){
+    $artikel=ArtikelModel::find_by_id($id);
+    //dd($artikel);
+    return view('artikel.edit',compact('artikel'));
+}
+public function update($id, Request $request){
+    //dd($request->all());
+    $artikel=ArtikelModel::update($id,$request->all());
+    return redirect('/artikel');
+}
+public function show($id){
+    $artikel=ArtikelModel::find_by_id($id);
+    ($artikel);
+    
+    return  view('artikel.show',compact('artikel'));
 }
 }
